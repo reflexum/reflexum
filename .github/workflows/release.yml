@@ -37,14 +37,9 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            reflexum-${{ github.ref_name }}.zip
-            main.js
-            manifest.json
+          files: reflexum-${{ github.ref_name }}.zip
           body: |
             Download `reflexum-${{ github.ref_name }}.zip` and extract to `.obsidian/plugins/reflexum/`
-            
-            Or download `main.js` and `manifest.json` manually.
           draft: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
