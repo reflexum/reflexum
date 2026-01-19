@@ -1,0 +1,16 @@
+{
+  "name": "reflexum",
+  "version": "0.3.0",
+  "main": "main.js",
+  "scripts": {
+    "build": "esbuild src/main.ts --bundle --outfile=main.js --format=cjs --platform=browser --external:obsidian --external:electron --external:@codemirror/state --external:@codemirror/view",
+    "dev": "esbuild src/main.ts --bundle --outfile=main.js --format=cjs --platform=browser --external:obsidian --external:electron --external:@codemirror/state --external:@codemirror/view --sourcemap --watch"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.11",
+    "obsidian": "^1.10.0"
+  },
+  "dependencies": {
+    "multi-llm-ts": "^4.6.2"
+  }
+}
