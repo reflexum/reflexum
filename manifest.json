@@ -1,0 +1,10 @@
+{
+  "id": "reflexum",
+  "name": "Reflexum",
+  "version": "0.1.0",
+  "minAppVersion": "1.5.0",
+  "description": "Track and analyze your study sessions with AI-powered insights and Telegram integration",
+  "author": "Reflexum",
+  "authorUrl": "https://github.com/reflexum",
+  "isDesktopOnly": false
+}
