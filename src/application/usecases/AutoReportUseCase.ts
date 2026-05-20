@@ -18,8 +18,8 @@ export class AutoReportUseCase {
 
     const dateRange = this.calculateDateRange(settings.autoReportFrequency);
 
-    // Генерируем отчет (но не открываем в Obsidian - это автоматическое действие)
-    await this.generateReportUseCase.execute(dateRange);
+    // Генерируем отчет без открытия вкладки: это фоновое действие.
+    await this.generateReportUseCase.execute(dateRange, { openReport: false, notify: false });
 
     // Отправляем в Telegram
     await this.sendReportToTelegramUseCase.execute(dateRange);
@@ -71,7 +71,13 @@ export class AutoReportUseCase {
 
   private isTimeToSend(now: Date, settings: any): boolean {
     const [targetHour, targetMinute] = settings.autoReportTime.split(':').map(Number);
-    return now.getHours() >= targetHour;
+    if (!Number.isFinite(targetHour) || !Number.isFinite(targetMinute)) {
+      return false;
+    }
+
+    const nowMinutes = now.getHours() * 60 + now.getMinutes();
+    const targetMinutes = targetHour * 60 + targetMinute;
+    return nowMinutes >= targetMinutes;
   }
 
   private getLastSunday(date: Date): Date {

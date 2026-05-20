@@ -1,6 +1,7 @@
 import type { INotesRepository } from '../../domain/repositories/INotesRepository';
 import type { IMessengerService } from '../ports/IMessengerService';
 import type { INotificationService } from '../ports/INotificationService';
+import { tgMdV2Escape } from '../services/DigestBuilderService';
 
 export class CheckDeadlinesUseCase {
   constructor(
@@ -18,10 +19,11 @@ export class CheckDeadlinesUseCase {
       
       if (soon.length === 0) return;
 
-      const lines = soon.map(s => 
-        `• ${s.course ?? "—"} — ${s.title ?? "—"} — ${s.due} (прогресс: ${s.progress}%)`
-      );
-      const text = "⏳ Ближайшие дедлайны:\n" + lines.join("\n");
+      const lines = soon.map(s => {
+        const item = `• ${s.course ?? "—"} — ${s.title ?? "—"} — ${s.due} (прогресс: ${s.progress}%)`;
+        return tgMdV2Escape(item);
+      });
+      const text = tgMdV2Escape("⏳ Ближайшие дедлайны:") + "\n" + lines.join("\n");
 
       await messengerService.sendMessage(text);
     } catch (error) {

@@ -89,7 +89,9 @@ export default class ReflexumPlugin extends Plugin {
         start = first.getTime();
       } else if (this.settings.datePreset === 'custom' && this.settings.dateFrom && this.settings.dateTo) {
         start = new Date(this.settings.dateFrom).getTime();
-        return { from: start, to: new Date(this.settings.dateTo).getTime() };
+        const customEnd = new Date(this.settings.dateTo);
+        customEnd.setHours(23, 59, 59, 999);
+        return { from: start, to: customEnd.getTime() };
       }
 
       return { from: start, to: end };
@@ -229,12 +231,13 @@ export default class ReflexumPlugin extends Plugin {
   }
 
   private startDueReminders(checkDeadlinesUseCase: CheckDeadlinesUseCase) {
-    if (!this.settings.telegramEnabled || !this.settings.botToken || !this.settings.chatId) {
-      return;
-    }
-
     if (this.reminderInterval) {
       window.clearInterval(this.reminderInterval);
+      this.reminderInterval = null;
+    }
+
+    if (!this.settings.telegramEnabled || !this.settings.botToken || !this.settings.chatId) {
+      return;
     }
 
     // Check every 6 hours
@@ -248,12 +251,13 @@ export default class ReflexumPlugin extends Plugin {
   }
 
   private startAutoReports(autoReportUseCase: AutoReportUseCase) {
-    if (!this.settings.autoReportEnabled || !this.settings.telegramEnabled) {
-      return;
-    }
-
     if (this.autoReportInterval) {
       window.clearInterval(this.autoReportInterval);
+      this.autoReportInterval = null;
+    }
+
+    if (!this.settings.autoReportEnabled || !this.settings.telegramEnabled) {
+      return;
     }
 
     // Check immediately on startup for missed reports

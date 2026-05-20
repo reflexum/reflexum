@@ -15,7 +15,7 @@ function asciiBar(v: number, max: number, w = 16): string {
 }
 
 /** Экранирование для Telegram MarkdownV2 */
-function tgMdV2Escape(s: string): string {
+export function tgMdV2Escape(s: string): string {
   // MarkdownV2 требует экранирования: _ * [ ] ( ) ~ ` > # + - = | { } . !
   return (s ?? "")
     .replace(/\\/g, "\\\\")
