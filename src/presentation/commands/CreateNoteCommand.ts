@@ -32,7 +32,7 @@ export class CreateNoteCommand {
       new Notice(`Created ${this.type} note`);
     } catch (error) {
       console.error('Error creating note:', error);
-      new Notice(`Error creating note: ${error.message}`);
+      new Notice(`Error creating note: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
