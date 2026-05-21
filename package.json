@@ -1,6 +1,6 @@
 {
   "name": "reflexum",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Study journal analytics, AI insights, and Telegram digests for Obsidian.",
   "main": "main.js",
   "scripts": {

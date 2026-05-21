@@ -5,7 +5,7 @@ Reflexum можно проверить без развёртки из исход
 ## Быстрая установка из release-архива
 
 1. Установите [Obsidian](https://obsidian.md/) или откройте уже существующий vault.
-2. Скачайте готовый архив: [`reflexum-v0.1.0.zip`](https://github.com/reflexum/reflexum/releases/download/v0.1.0/reflexum-v0.1.0.zip).
+2. Скачайте готовый архив `reflexum-<version>.zip` из [последнего GitHub Release](https://github.com/reflexum/reflexum/releases/latest).
 3. Внутри vault создайте папку `.obsidian/plugins/reflexum/`, если её ещё нет.
 4. Распакуйте содержимое архива в `.obsidian/plugins/reflexum/`.
 5. В Obsidian откройте `Settings -> Community plugins`.
