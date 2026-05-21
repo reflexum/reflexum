@@ -1,0 +1,18 @@
+# Документация Reflexum
+
+Эта папка собирает материалы, которые нужны пользователю, разработчику и проверяющему проекта.
+
+## Для проверяющего
+
+- [Установка без сборки из исходного кода](INSTALLATION.md)
+- [Пользовательская документация](USER_GUIDE.md)
+- [Документация для разработчиков](DEVELOPMENT.md)
+- [Готовый release-архив `reflexum-v0.1.0.zip`](https://github.com/reflexum/reflexum/releases/download/v0.1.0/reflexum-v0.1.0.zip)
+
+## Что находится в репозитории
+
+- Исходный код продукта: `src/`
+- Шаблоны заметок: `templates/`
+- Манифест Obsidian-плагина: `manifest.json`
+- Release workflow: `.github/workflows/release.yml`
+- CI workflow: `.github/workflows/ci.yml`

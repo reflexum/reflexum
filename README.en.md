@@ -4,6 +4,14 @@
 
 Reflexum is an Obsidian plugin for study journaling: study-session notes, assignment deadlines, analytical reports, AI insights, and Telegram digests.
 
+## Project Materials
+
+- Product source code: [`src/`](src/)
+- User documentation: [`docs/USER_GUIDE.md`](docs/USER_GUIDE.md)
+- Developer documentation: [`docs/DEVELOPMENT.md`](docs/DEVELOPMENT.md)
+- Installation and verification without building from source: [`docs/INSTALLATION.md`](docs/INSTALLATION.md)
+- Ready-to-install archive: [`reflexum-v0.1.0.zip`](https://github.com/reflexum/reflexum/releases/download/v0.1.0/reflexum-v0.1.0.zip)
+
 ## Product Scenario
 
 Reflexum is designed for students, teachers, independent researchers, and anyone who keeps learning materials in Obsidian. The plugin turns scattered notes into an observable system: log study sessions, understand how time is distributed across courses and projects, track assignments, notice attention gaps, and receive regular summaries.
@@ -74,11 +82,13 @@ Reports are saved to `Reflexum/Reports/` inside your vault.
 
 ## Installation
 
-1. Download the latest `reflexum-<version>.zip` from [GitHub Releases](https://github.com/reflexum/reflexum/releases).
+1. Download the latest `reflexum-<version>.zip` from [GitHub Releases](https://github.com/reflexum/reflexum/releases), or use the ready archive [`reflexum-v0.1.0.zip`](https://github.com/reflexum/reflexum/releases/download/v0.1.0/reflexum-v0.1.0.zip).
 2. Extract it to `.obsidian/plugins/reflexum/` inside your vault.
 3. Enable Reflexum in Obsidian Community plugins settings.
 
 For manual installation, download `main.js` and `manifest.json`, place them into `.obsidian/plugins/reflexum/`, and enable the plugin in Obsidian.
+
+The detailed installation and verification flow is documented in [`docs/INSTALLATION.md`](docs/INSTALLATION.md).
 
 ## Privacy
 

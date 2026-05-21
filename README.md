@@ -4,6 +4,14 @@
 
 Reflexum — плагин Obsidian для учебного журнала: заметки о занятиях, задания с дедлайнами, аналитические отчеты, AI-инсайты и отправка дайджестов в Telegram.
 
+## Материалы проекта
+
+- Исходный код продукта: [`src/`](src/)
+- Пользовательская документация: [`docs/USER_GUIDE.md`](docs/USER_GUIDE.md)
+- Документация для разработчиков: [`docs/DEVELOPMENT.md`](docs/DEVELOPMENT.md)
+- Установка и проверка без сборки из исходников: [`docs/INSTALLATION.md`](docs/INSTALLATION.md)
+- Готовый установочный архив: [`reflexum-v0.1.0.zip`](https://github.com/reflexum/reflexum/releases/download/v0.1.0/reflexum-v0.1.0.zip)
+
 ## Сценарий продукта
 
 Reflexum рассчитан на студентов, преподавателей, самостоятельных исследователей и всех, кто ведет учебные материалы в Obsidian. Плагин помогает превратить разрозненные заметки в наблюдаемую систему: фиксировать учебные сессии, видеть распределение времени по курсам и проектам, отслеживать задания, замечать пробелы внимания и регулярно получать краткие отчеты.
@@ -74,11 +82,13 @@ status: "in-progress"
 
 ## Установка
 
-1. Скачайте последний `reflexum-<version>.zip` из [GitHub Releases](https://github.com/reflexum/reflexum/releases).
+1. Скачайте последний `reflexum-<version>.zip` из [GitHub Releases](https://github.com/reflexum/reflexum/releases) или используйте готовый архив [`reflexum-v0.1.0.zip`](https://github.com/reflexum/reflexum/releases/download/v0.1.0/reflexum-v0.1.0.zip).
 2. Распакуйте его в `.obsidian/plugins/reflexum/` внутри вашего vault.
 3. Включите Reflexum в настройках Community plugins в Obsidian.
 
 Для ручной установки скачайте `main.js` и `manifest.json`, поместите их в `.obsidian/plugins/reflexum/` и включите плагин в Obsidian.
+
+Подробный сценарий установки и проверки описан в [`docs/INSTALLATION.md`](docs/INSTALLATION.md).
 
 ## Приватность
 
