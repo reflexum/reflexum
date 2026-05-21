@@ -1,38 +1,40 @@
 # Reflexum
 
-Obsidian plugin for tracking study sessions and analyzing your learning progress.
+[<kbd>English version</kbd>](README.en.md)
 
-## Features
+Reflexum — плагин Obsidian для учебного журнала: заметки о занятиях, задания с дедлайнами, аналитические отчеты, AI-инсайты и отправка дайджестов в Telegram.
 
-- �� Track study sessions with duration and topics
-- 📝 Manage assignments with deadlines
-- 🤖 Generate insights using AI (optional)
-- 📱 Telegram reports and reminders (optional)
-- 📈 Visual reports with charts
+## Сценарий продукта
 
-## Installation
+Reflexum рассчитан на студентов, преподавателей, самостоятельных исследователей и всех, кто ведет учебные материалы в Obsidian. Плагин помогает превратить разрозненные заметки в наблюдаемую систему: фиксировать учебные сессии, видеть распределение времени по курсам и проектам, отслеживать задания, замечать пробелы внимания и регулярно получать краткие отчеты.
 
-### From Release
+Цель Reflexum — не заменить личные заметки, а сделать их полезнее после написания. Плагин читает markdown-файлы из vault, извлекает frontmatter, теги, чек-листы и текст, а затем собирает понятную сводку по выбранному периоду или текущей заметке.
 
-1. Download latest release from [Releases](https://github.com/reflexum/reflexum/releases)
-2. Extract to `.obsidian/plugins/reflexum/` in your vault
-3. Enable plugin in Obsidian settings
+## Возможности
 
-### Manual
+- Создание шаблонных заметок для учебных сессий и заданий из палитры команд Obsidian.
+- Анализ учебных заметок по периоду: последние 7 дней, текущая неделя, текущий месяц или пользовательский диапазон.
+- Отчет по текущей заметке, если нужно быстро получить краткую сводку по одному материалу.
+- Учет времени по курсам и проектам на основе `duration`, frontmatter, тегов и структуры vault.
+- Сводка по дням, темам, ключевым словам, чек-листам, заданиям и ближайшим дедлайнам.
+- Mermaid-диаграммы в markdown-отчетах для распределения времени, активности по дням, тем и ключевых слов.
+- Опциональные AI-инсайты и вопросы для самопроверки через OpenAI, Anthropic, Google, Ollama, Groq, DeepSeek, Mistral AI, xAI, OpenRouter, Azure AI, Cerebras и Meta/Llama.
+- Telegram-дайджесты и напоминания о дедлайнах.
+- Автоматические отчеты в Telegram по расписанию: ежедневно, еженедельно или ежемесячно.
+- Переключение языка отчетов между русским и английским.
+- Локальное хранение данных и настроек внутри Obsidian.
 
-1. Download `main.js` and `manifest.json`
-2. Place in `.obsidian/plugins/reflexum/`
-3. Enable plugin
+## Быстрый старт
 
-## Quick Start
+Используйте палитру команд:
 
-### Create Notes
+- `Create study session note` — создать заметку учебной сессии.
+- `Create assignment note` — создать заметку задания с дедлайном.
+- `Analyze (current preset) and open report` — собрать отчет по выбранному периоду и открыть его в Obsidian.
+- `Analyze current note and open report` — собрать отчет по текущей заметке.
+- `Analyze (current preset) and send to Telegram` — собрать отчет по выбранному периоду и отправить дайджест в Telegram.
 
-Use command palette (Ctrl/Cmd + P):
-- `Create study session note` - track learning
-- `Create assignment note` - track tasks
-
-### Study Session
+Пример учебной сессии:
 
 ```yaml
 ---
@@ -44,7 +46,7 @@ duration: 120
 ---
 ```
 
-### Assignment
+Пример задания:
 
 ```yaml
 ---
@@ -57,63 +59,56 @@ status: "in-progress"
 ---
 ```
 
-## Generate Reports
+Отчеты сохраняются в `Reflexum/Reports/` внутри vault.
 
-- `Analyze (current preset) and open report` - view in Obsidian
-- `Analyze current note and open report` - single note
-- `Analyze (current preset) and send to Telegram` - send to Telegram
+## Настройки
 
-## Settings
+- `Date preset` — период анализа: последние 7 дней, текущая неделя, текущий месяц или custom range.
+- `Language` — язык отчетов: русский или английский.
+- `Use LLM` — включить AI-инсайты и вопросы для самопроверки.
+- `LLM Provider`, `API Key`, `Model`, `Base URL` — параметры выбранного LLM-провайдера.
+- `Include mini-quiz` — добавить вопросы для самопроверки в отчет.
+- `Enable Telegram` — включить отправку дайджестов и напоминаний.
+- `Due reminders` — количество дней до дедлайна для напоминаний.
+- `Auto-report to Telegram` — автоматическая отправка отчетов по расписанию.
 
-### Basic
-- **Date Preset**: Last 7 days / This week / This month / Custom
-- **Language**: Russian / English
+## Установка
 
-### LLM (Optional)
-1. Enable "Use LLM"
-2. Choose provider (OpenAI, Anthropic, Google, etc.)
-3. Enter API key
-4. Select model
+1. Скачайте последний `reflexum-<version>.zip` из [GitHub Releases](https://github.com/reflexum/reflexum/releases).
+2. Распакуйте его в `.obsidian/plugins/reflexum/` внутри вашего vault.
+3. Включите Reflexum в настройках Community plugins в Obsidian.
 
-### Telegram (Optional)
-1. Create bot via [@BotFather](https://t.me/botfather)
-2. Get Chat ID from [@userinfobot](https://t.me/userinfobot)
-3. Enable Telegram
-4. Enter Bot Token and Chat ID
+Для ручной установки скачайте `main.js` и `manifest.json`, поместите их в `.obsidian/plugins/reflexum/` и включите плагин в Obsidian.
 
-### Auto-Reports
-- Enable "Auto-report to Telegram"
-- Set frequency: Daily / Weekly / Monthly
-- Set time (e.g., "20:00")
+## Приватность
 
-## What's in Reports
+- Учебные заметки, отчеты и настройки остаются в вашем Obsidian vault.
+- Настройки плагина, включая API-ключи, хранятся в `.obsidian/plugins/reflexum/data.json`.
+- Reflexum не использует собственный внешний сервер.
+- Сетевые запросы выполняются только при включенных интеграциях: к выбранному LLM-провайдеру и Telegram Bot API.
 
-- Total time spent
-- Time by projects/courses
-- Daily activity
-- Top topics and keywords
-- Task completion
-- Upcoming deadlines
-- AI insights (if enabled)
-- Self-check questions (if enabled)
-
-## Privacy
-
-- All data stored locally
-- API keys in `.obsidian/plugins/reflexum/data.json`
-- No external servers except your LLM/Telegram
-
-## Development
+## Разработка
 
 ```bash
 npm install
+npm run typecheck
 npm run build
 ```
 
-## License
+Для полной локальной проверки используйте:
+
+```bash
+npm run check
+```
+
+Production build создает `main.js` в корне репозитория. Release-артефакты: `main.js` и `manifest.json`.
+
+Для локальной разработки с автоматической пересборкой используйте:
+
+```bash
+npm run dev
+```
+
+## Лицензия
 
 MIT
-
-## Issues
-
-[Report bugs](https://github.com/reflexum/reflexum/issues)
