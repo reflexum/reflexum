@@ -29,6 +29,9 @@ export class MultiLLMProvider implements ILLMProvider {
 
     try {
       const models = await loadModels(this.settings.llmProvider, config);
+      if (!models?.chat?.length) {
+        throw new Error("No chat models available for the selected provider.");
+      }
 
       let selectedModel = models.chat[0];
       if (this.settings.llmModel) {
@@ -130,6 +133,10 @@ export class MultiLLMProvider implements ILLMProvider {
       }
 
       const models = await loadModels(this.settings.llmProvider, config);
+      if (!models?.chat?.length) {
+        return [];
+      }
+
       return models.chat.map((m) => ({
         id: m.id,
         name: m.name,

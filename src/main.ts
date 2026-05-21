@@ -33,7 +33,7 @@ import { CreateNoteCommand } from './presentation/commands/CreateNoteCommand';
 import { ReflexumSettingsTab } from './presentation/settings/ReflexumSettingsTab';
 
 export default class ReflexumPlugin extends Plugin {
-  settings: ReflexumSettings;
+  settings!: ReflexumSettings;
   private reminderInterval: number | null = null;
   private autoReportInterval: number | null = null;
   private llmProvider: MultiLLMProvider | null = null;
