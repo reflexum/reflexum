@@ -1,6 +1,7 @@
 {
   "name": "reflexum",
   "version": "0.1.0",
+  "description": "Study journal analytics, AI insights, and Telegram digests for Obsidian.",
   "main": "main.js",
   "scripts": {
     "build": "esbuild src/main.ts --bundle --outfile=main.js --format=cjs --platform=browser --external:obsidian --external:electron --external:@codemirror/state --external:@codemirror/view",
@@ -15,5 +16,12 @@
   },
   "dependencies": {
     "multi-llm-ts": "^4.6.2"
-  }
+  },
+  "keywords": [
+    "obsidian",
+    "study",
+    "analytics",
+    "telegram"
+  ],
+  "license": "MIT"
 }
