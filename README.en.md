@@ -10,7 +10,7 @@ Reflexum is an Obsidian plugin for study journaling: study-session notes, assign
 - User documentation: [`docs/USER_GUIDE.md`](docs/USER_GUIDE.md)
 - Developer documentation: [`docs/DEVELOPMENT.md`](docs/DEVELOPMENT.md)
 - Installation and verification without building from source: [`docs/INSTALLATION.md`](docs/INSTALLATION.md)
-- Ready-to-install archive: [`reflexum-v0.1.0.zip`](https://github.com/reflexum/reflexum/releases/download/v0.1.0/reflexum-v0.1.0.zip)
+- Ready-to-install archive: [latest GitHub Release](https://github.com/reflexum/reflexum/releases/latest)
 
 ## Product Scenario
 
@@ -82,7 +82,7 @@ Reports are saved to `Reflexum/Reports/` inside your vault.
 
 ## Installation
 
-1. Download the latest `reflexum-<version>.zip` from [GitHub Releases](https://github.com/reflexum/reflexum/releases), or use the ready archive [`reflexum-v0.1.0.zip`](https://github.com/reflexum/reflexum/releases/download/v0.1.0/reflexum-v0.1.0.zip).
+1. Download the latest `reflexum-<version>.zip` from [GitHub Releases](https://github.com/reflexum/reflexum/releases/latest).
 2. Extract it to `.obsidian/plugins/reflexum/` inside your vault.
 3. Enable Reflexum in Obsidian Community plugins settings.
 

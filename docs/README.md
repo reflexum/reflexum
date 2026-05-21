@@ -7,7 +7,7 @@
 - [Установка без сборки из исходного кода](INSTALLATION.md)
 - [Пользовательская документация](USER_GUIDE.md)
 - [Документация для разработчиков](DEVELOPMENT.md)
-- [Готовый release-архив `reflexum-v0.1.0.zip`](https://github.com/reflexum/reflexum/releases/download/v0.1.0/reflexum-v0.1.0.zip)
+- [Готовый release-архив из последнего GitHub Release](https://github.com/reflexum/reflexum/releases/latest)
 
 ## Что находится в репозитории
 
