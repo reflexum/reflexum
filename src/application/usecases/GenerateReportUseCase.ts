@@ -11,6 +11,11 @@ export interface ReportFormatter {
   generateReportPath(from: number, to: number, unique?: boolean): string;
 }
 
+export interface GenerateReportOptions {
+  openReport?: boolean;
+  notify?: boolean;
+}
+
 export class GenerateReportUseCase {
   constructor(
     private notesRepo: INotesRepository,
@@ -22,8 +27,10 @@ export class GenerateReportUseCase {
     private reportFormatter: ReportFormatter
   ) {}
 
-  async execute(dateRange: { from: number; to: number }): Promise<void> {
+  async execute(dateRange: { from: number; to: number }, options: GenerateReportOptions = {}): Promise<void> {
     try {
+      const openReport = options.openReport ?? true;
+      const notify = options.notify ?? true;
       const settings = await this.settingsRepo.load();
       
       // 1. Collect notes in date range
@@ -87,9 +94,13 @@ export class GenerateReportUseCase {
       const reportPath = this.reportFormatter.generateReportPath(dateRange.from, dateRange.to, true);
       
       await this.reportRepo.saveReport(reportPath, markdown);
-      await this.reportRepo.openReport(reportPath);
+      if (openReport) {
+        await this.reportRepo.openReport(reportPath);
+      }
 
-      this.notificationService.showNotice(`Reflexum: report created → ${reportPath}`);
+      if (notify) {
+        this.notificationService.showNotice(`Reflexum: report created → ${reportPath}`);
+      }
     } catch (error) {
       console.error('Generate report error:', error);
       this.notificationService.showNotice(`Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
