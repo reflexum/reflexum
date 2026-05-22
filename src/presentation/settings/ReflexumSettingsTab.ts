@@ -22,6 +22,117 @@ const LLM_PROVIDERS = [
   { id: 'meta', name: 'Meta/Llama' },
 ];
 
+type SettingsLang = 'ru' | 'en';
+
+const SETTINGS_LABELS = {
+  ru: {
+    title: 'Reflexum — учебный журнал',
+    datePreset: 'Период анализа',
+    datePresets: {
+      last7: 'Последние 7 дней',
+      thisWeek: 'Эта неделя',
+      thisMonth: 'Этот месяц',
+      custom: 'Произвольный'
+    },
+    from: 'С',
+    to: 'По',
+    language: 'Язык',
+    llmIntegration: 'LLM-интеграция',
+    useLLM: 'Использовать LLM',
+    useLLMDesc: 'Включить AI-инсайты и вопросы для самопроверки',
+    llmProvider: 'LLM-провайдер',
+    llmProviderDesc: 'Выберите AI-провайдера',
+    apiKey: 'API-ключ',
+    apiKeyDesc: 'API-ключ выбранного провайдера',
+    loadAvailableModels: 'Загрузить доступные модели',
+    loadAvailableModelsDesc: 'Получить список моделей у провайдера',
+    loading: 'Загрузка...',
+    loadModels: 'Загрузить модели',
+    model: 'Модель',
+    modelDesc: 'Выберите конкретную модель',
+    defaultModel: 'По умолчанию (первая доступная)',
+    modelId: 'ID модели (необязательно)',
+    modelIdDesc: 'Конкретная модель, например gpt-4o-mini. Оставьте пустым для значения по умолчанию или загрузите список моделей выше.',
+    baseUrl: 'Base URL',
+    baseUrlDesc: 'Пользовательский endpoint URL для Ollama/Azure',
+    includeQuiz: 'Добавлять мини-квиз',
+    includeQuizDesc: 'Генерировать вопросы для самопроверки в отчётах',
+    telegram: 'Telegram',
+    enableTelegram: 'Включить Telegram',
+    enableTelegramDesc: 'Отправлять отчёты и уведомления в Telegram',
+    botToken: 'Токен бота',
+    chatId: 'Chat ID',
+    dueReminders: 'Напоминания о дедлайнах',
+    dueRemindersDesc: 'Отправлять напоминания о заданиях с дедлайном в ближайшие N дней',
+    autoReport: 'Автоотчёт в Telegram',
+    autoReportDesc: 'Автоматически генерировать и отправлять отчёты в Telegram',
+    reportFrequency: 'Частота отчёта',
+    reportFrequencyDesc: 'Как часто отправлять автоматические отчёты',
+    frequencies: {
+      daily: 'Ежедневно',
+      weekly: 'Еженедельно (воскресенье)',
+      monthly: 'Ежемесячно (последний день)'
+    },
+    reportTime: 'Время отчёта',
+    reportTimeDesc: 'Время отправки отчётов в формате HH:mm, 24 часа'
+  },
+  en: {
+    title: 'Reflexum — Study Journal',
+    datePreset: 'Date preset',
+    datePresets: {
+      last7: 'Last 7 days',
+      thisWeek: 'This week',
+      thisMonth: 'This month',
+      custom: 'Custom'
+    },
+    from: 'From',
+    to: 'To',
+    language: 'Language',
+    llmIntegration: 'LLM Integration',
+    useLLM: 'Use LLM',
+    useLLMDesc: 'Enable AI-powered insights and quiz generation',
+    llmProvider: 'LLM Provider',
+    llmProviderDesc: 'Choose your AI provider',
+    apiKey: 'API Key',
+    apiKeyDesc: 'Your API key for the selected provider',
+    loadAvailableModels: 'Load available models',
+    loadAvailableModelsDesc: 'Fetch list of models from the provider',
+    loading: 'Loading...',
+    loadModels: 'Load Models',
+    model: 'Model',
+    modelDesc: 'Select a specific model',
+    defaultModel: 'Default (first available)',
+    modelId: 'Model ID (optional)',
+    modelIdDesc: 'Specific model to use (e.g., gpt-4o-mini). Leave empty for default or load models above.',
+    baseUrl: 'Base URL',
+    baseUrlDesc: 'Custom endpoint URL (for Ollama/Azure)',
+    includeQuiz: 'Include mini-quiz',
+    includeQuizDesc: 'Generate quiz questions in reports',
+    telegram: 'Telegram',
+    enableTelegram: 'Enable Telegram',
+    enableTelegramDesc: 'Send reports and notifications to Telegram',
+    botToken: 'Bot token',
+    chatId: 'Chat ID',
+    dueReminders: 'Due reminders (days ahead)',
+    dueRemindersDesc: 'Send reminders for assignments due within N days',
+    autoReport: 'Auto-report to Telegram',
+    autoReportDesc: 'Automatically generate and send reports to Telegram',
+    reportFrequency: 'Report frequency',
+    reportFrequencyDesc: 'How often to send automatic reports',
+    frequencies: {
+      daily: 'Daily',
+      weekly: 'Weekly (Sunday)',
+      monthly: 'Monthly (last day)'
+    },
+    reportTime: 'Report time',
+    reportTimeDesc: 'Time to send reports (HH:mm format, 24h)'
+  }
+} as const;
+
+function getSettingsLang(lang?: string): SettingsLang {
+  return lang === 'en' ? 'en' : 'ru';
+}
+
 export class ReflexumSettingsTab extends PluginSettingTab {
   private loadedModels: { id: string; name: string }[] = [];
   private isLoadingModels = false;
@@ -37,20 +148,16 @@ export class ReflexumSettingsTab extends PluginSettingTab {
 
   display(): void {
     const { containerEl } = this;
+    const labels = SETTINGS_LABELS[getSettingsLang(this.settings.language)];
     containerEl.empty();
     
-    containerEl.createEl('h2', { text: 'Reflexum — Study Journal' });
+    containerEl.createEl('h2', { text: labels.title });
 
     // Date preset
     new Setting(containerEl)
-      .setName('Date preset')
+      .setName(labels.datePreset)
       .addDropdown(dd => dd
-        .addOptions({
-          last7: 'Last 7 days',
-          thisWeek: 'This week',
-          thisMonth: 'This month',
-          custom: 'Custom'
-        })
+        .addOptions(labels.datePresets)
         .setValue(this.settings.datePreset)
         .onChange(async (v: any) => {
           this.settings.datePreset = v;
@@ -60,7 +167,7 @@ export class ReflexumSettingsTab extends PluginSettingTab {
 
     if (this.settings.datePreset === 'custom') {
       new Setting(containerEl)
-        .setName('From')
+        .setName(labels.from)
         .addText(t => t
           .setPlaceholder('YYYY-MM-DD')
           .setValue(this.settings.dateFrom ?? '')
@@ -70,7 +177,7 @@ export class ReflexumSettingsTab extends PluginSettingTab {
           }));
 
       new Setting(containerEl)
-        .setName('To')
+        .setName(labels.to)
         .addText(t => t
           .setPlaceholder('YYYY-MM-DD')
           .setValue(this.settings.dateTo ?? '')
@@ -82,21 +189,22 @@ export class ReflexumSettingsTab extends PluginSettingTab {
 
     // Language
     new Setting(containerEl)
-      .setName('Language')
+      .setName(labels.language)
       .addDropdown(dd => dd
         .addOptions({ ru: 'Русский', en: 'English' })
         .setValue(this.settings.language ?? 'ru')
         .onChange(async (v: any) => {
           this.settings.language = v;
           await this.callbacks.onSettingsChange(this.settings);
+          this.display();
         }));
 
     // LLM settings
-    containerEl.createEl('h3', { text: 'LLM Integration' });
+    containerEl.createEl('h3', { text: labels.llmIntegration });
 
     new Setting(containerEl)
-      .setName('Use LLM')
-      .setDesc('Enable AI-powered insights and quiz generation')
+      .setName(labels.useLLM)
+      .setDesc(labels.useLLMDesc)
       .addToggle(t => t
         .setValue(this.settings.useLLM)
         .onChange(async v => {
@@ -107,8 +215,8 @@ export class ReflexumSettingsTab extends PluginSettingTab {
 
     if (this.settings.useLLM) {
       new Setting(containerEl)
-        .setName('LLM Provider')
-        .setDesc('Choose your AI provider')
+        .setName(labels.llmProvider)
+        .setDesc(labels.llmProviderDesc)
         .addDropdown(dd => {
           const options: Record<string, string> = {};
           for (const p of LLM_PROVIDERS) {
@@ -124,8 +232,8 @@ export class ReflexumSettingsTab extends PluginSettingTab {
         });
 
       new Setting(containerEl)
-        .setName('API Key')
-        .setDesc('Your API key for the selected provider')
+        .setName(labels.apiKey)
+        .setDesc(labels.apiKeyDesc)
         .addText(t => {
           t.setPlaceholder('sk-...')
             .setValue(this.settings.llmApiKey ?? '')
@@ -141,10 +249,10 @@ export class ReflexumSettingsTab extends PluginSettingTab {
 
       // Button to load models
       new Setting(containerEl)
-        .setName('Load available models')
-        .setDesc('Fetch list of models from the provider')
+        .setName(labels.loadAvailableModels)
+        .setDesc(labels.loadAvailableModelsDesc)
         .addButton(btn => btn
-          .setButtonText(this.isLoadingModels ? 'Loading...' : 'Load Models')
+          .setButtonText(this.isLoadingModels ? labels.loading : labels.loadModels)
           .setDisabled(this.isLoadingModels || !this.settings.llmApiKey)
           .onClick(async () => {
             await this.loadModels();
@@ -153,10 +261,10 @@ export class ReflexumSettingsTab extends PluginSettingTab {
       // Model selection dropdown
       if (this.loadedModels.length > 0) {
         new Setting(containerEl)
-          .setName('Model')
-          .setDesc('Select a specific model')
+          .setName(labels.model)
+          .setDesc(labels.modelDesc)
           .addDropdown(dd => {
-            const options: Record<string, string> = { '': 'Default (first available)' };
+            const options: Record<string, string> = { '': labels.defaultModel };
             for (const model of this.loadedModels) {
               options[model.id] = model.name;
             }
@@ -169,8 +277,8 @@ export class ReflexumSettingsTab extends PluginSettingTab {
           });
       } else {
         new Setting(containerEl)
-          .setName('Model ID (optional)')
-          .setDesc('Specific model to use (e.g., gpt-4o-mini). Leave empty for default or load models above.')
+          .setName(labels.modelId)
+          .setDesc(labels.modelIdDesc)
           .addText(t => t
             .setPlaceholder('gpt-4o-mini')
             .setValue(this.settings.llmModel ?? '')
@@ -182,8 +290,8 @@ export class ReflexumSettingsTab extends PluginSettingTab {
 
       if (this.settings.llmProvider === 'ollama' || this.settings.llmProvider === 'azure') {
         new Setting(containerEl)
-          .setName('Base URL')
-          .setDesc('Custom endpoint URL (for Ollama/Azure)')
+          .setName(labels.baseUrl)
+          .setDesc(labels.baseUrlDesc)
           .addText(t => t
             .setPlaceholder('http://localhost:11434')
             .setValue(this.settings.llmBaseUrl ?? '')
@@ -194,8 +302,8 @@ export class ReflexumSettingsTab extends PluginSettingTab {
       }
 
       new Setting(containerEl)
-        .setName('Include mini-quiz')
-        .setDesc('Generate quiz questions in reports')
+        .setName(labels.includeQuiz)
+        .setDesc(labels.includeQuizDesc)
         .addToggle(t => t
           .setValue(this.settings.includeQuiz)
           .onChange(async v => {
@@ -205,11 +313,11 @@ export class ReflexumSettingsTab extends PluginSettingTab {
     }
 
     // Telegram settings
-    containerEl.createEl('h3', { text: 'Telegram' });
+    containerEl.createEl('h3', { text: labels.telegram });
 
     new Setting(containerEl)
-      .setName('Enable Telegram')
-      .setDesc('Send reports and notifications to Telegram')
+      .setName(labels.enableTelegram)
+      .setDesc(labels.enableTelegramDesc)
       .addToggle(t => t
         .setValue(this.settings.telegramEnabled)
         .onChange(async v => {
@@ -220,7 +328,7 @@ export class ReflexumSettingsTab extends PluginSettingTab {
 
     if (this.settings.telegramEnabled) {
       new Setting(containerEl)
-        .setName('Bot token')
+        .setName(labels.botToken)
         .addText(t => t
           .setPlaceholder('123456:ABC-DEF...')
           .setValue(this.settings.botToken ?? '')
@@ -231,7 +339,7 @@ export class ReflexumSettingsTab extends PluginSettingTab {
           .inputEl.type = 'password');
 
       new Setting(containerEl)
-        .setName('Chat ID')
+        .setName(labels.chatId)
         .addText(t => t
           .setPlaceholder('123456789')
           .setValue(this.settings.chatId ?? '')
@@ -241,8 +349,8 @@ export class ReflexumSettingsTab extends PluginSettingTab {
           }));
 
       new Setting(containerEl)
-        .setName('Due reminders (days ahead)')
-        .setDesc('Send reminders for assignments due within N days')
+        .setName(labels.dueReminders)
+        .setDesc(labels.dueRemindersDesc)
         .addSlider(s => s
           .setLimits(1, 7, 1)
           .setValue(this.settings.dueReminderDays)
@@ -253,8 +361,8 @@ export class ReflexumSettingsTab extends PluginSettingTab {
           }));
 
       new Setting(containerEl)
-        .setName('Auto-report to Telegram')
-        .setDesc('Automatically generate and send reports to Telegram')
+        .setName(labels.autoReport)
+        .setDesc(labels.autoReportDesc)
         .addToggle(t => t
           .setValue(this.settings.autoReportEnabled)
           .onChange(async v => {
@@ -265,14 +373,10 @@ export class ReflexumSettingsTab extends PluginSettingTab {
 
       if (this.settings.autoReportEnabled) {
         new Setting(containerEl)
-          .setName('Report frequency')
-          .setDesc('How often to send automatic reports')
+          .setName(labels.reportFrequency)
+          .setDesc(labels.reportFrequencyDesc)
           .addDropdown(dd => dd
-            .addOptions({
-              daily: 'Daily',
-              weekly: 'Weekly (Sunday)',
-              monthly: 'Monthly (last day)'
-            })
+            .addOptions(labels.frequencies)
             .setValue(this.settings.autoReportFrequency)
             .onChange(async (v: any) => {
               this.settings.autoReportFrequency = v;
@@ -280,8 +384,8 @@ export class ReflexumSettingsTab extends PluginSettingTab {
             }));
 
         new Setting(containerEl)
-          .setName('Report time')
-          .setDesc('Time to send reports (HH:mm format, 24h)')
+          .setName(labels.reportTime)
+          .setDesc(labels.reportTimeDesc)
           .addText(t => t
             .setPlaceholder('20:00')
             .setValue(this.settings.autoReportTime)
